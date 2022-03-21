@@ -43,11 +43,11 @@ def get_aggregate_wordle_metric(word_list: list, test_word_list: list) -> (list,
 
 
 def get_wordle_score(letter_metric: list, position_metric: list) -> float:
-    weights_letter = [0.0,1.0,2.0,3.0,4.0,5.0]
-    addition_vector_letter = [a*b for a,b in zip(weights_letter, letter_metric)]
+    weights_letter = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0]
+    addition_vector_letter = [a*b for a, b in zip(weights_letter, letter_metric)]
 
     weights_position = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5]
-    addition_vector_position = [a*b for a,b in zip(weights_position, position_metric)]
+    addition_vector_position = [a*b for a, b in zip(weights_position, position_metric)]
     score = sum(addition_vector_letter) + sum(addition_vector_position)
     return score
 
@@ -64,8 +64,8 @@ def get_wordle_score_df(reference_word_list: list, test_word_list: list) -> pd.D
 
     wordle_score_df = pd.DataFrame({"word": test_word_list,
                                     "score": score_list,
-                                   "letter_metric": letter_metric_list,
-                                   "position_metric": position_metric_list})
+                                    "letter_metric": letter_metric_list,
+                                    "position_metric": position_metric_list})
     return wordle_score_df
 
 
@@ -152,14 +152,14 @@ def floor_1(number: int) -> int:
     return number
 
 
-def get_letter_stats_df(wordlist: list):
+def get_letter_stats_df(wordlist: list) -> pandas.DataFrame:
     letters = get_letters(wordlist)
     norm_occurrence_list = []
     norm_word_occurrence_list = []
     for letter in letters:
         fkt = lambda x: stats_fkt(letter, x)
         occurrences = map(fkt, wordlist)
-        sum_occurrences = [0,0,0,0,0,0]
+        sum_occurrences = [0, 0, 0, 0, 0, 0]
         word_occurrence = 0
         for occurrence in occurrences:
             sum_occurrences = [a + b for a, b in zip(sum_occurrences, occurrence)]
@@ -181,7 +181,7 @@ def get_letter_stats_df(wordlist: list):
     return return_df
 
 
-def stats_fkt(letter:str, word:str):
+def stats_fkt(letter: str, word: str) -> list:
     occurrence = []
     for wor in word:
         if wor == letter:
