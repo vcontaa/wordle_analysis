@@ -1,6 +1,9 @@
 import pandas
 import pandas as pd
 
+LETTER_WEIGHT = 1.0
+POSITION_WEIGHT = 0.1
+
 
 def get_corncob(word_length: int) -> list:
     corncob_wordlist = []
@@ -43,10 +46,10 @@ def get_aggregate_wordle_metric(word_list: list, test_word_list: list) -> (list,
 
 
 def get_wordle_score(letter_metric: list, position_metric: list) -> float:
-    weights_letter = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0]
+    weights_letter = [x * LETTER_WEIGHT for x in range(0, 6)]
     addition_vector_letter = [a*b for a, b in zip(weights_letter, letter_metric)]
 
-    weights_position = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5]
+    weights_position = [x * POSITION_WEIGHT for x in range(0, 6)]
     addition_vector_position = [a*b for a, b in zip(weights_position, position_metric)]
     score = sum(addition_vector_letter) + sum(addition_vector_position)
     return score
@@ -206,5 +209,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
